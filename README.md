@@ -3,11 +3,13 @@ PHP oauth token validator/generator library
 
 #Usage:
 
+Download the oauth.php file and place it anywhere to your project.
+
 Generate token:
   ````php
   <?php
   
-  require_once("oauth.php");
+  require_once("../somepath/oauth.php");
   
   $id = 0;
   $expirationDate = '20151215160000'; // Format YMdHis
@@ -19,7 +21,7 @@ Validate token:
   ````php
   <?php
   
-  require_once("oauth.php");
+  require_once("../somepath/oauth.php");
   
   Authentification\Oauth::validate_token('sometoken', function() {
     // do something if valid
