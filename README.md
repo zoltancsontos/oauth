@@ -1,4 +1,4 @@
-# oauth
+# PHP oauth
 PHP oauth token validator/generator library
 
 #Usage:
