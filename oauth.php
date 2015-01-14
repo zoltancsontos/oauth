@@ -25,9 +25,11 @@ class Oauth {
     /**
      * Validates token
      * @param string $token
+     * @param string $sCallback - success callback
+     * @param string $eCallback - error callback
      * @return boolean
      */
-    public static function validate_token($token, $callback = '') {
+    public static function validate_token($token, $sCallback = '', $eCallback = '') {
         
         $contents = explode('-', $token);
         $id = $contents[0];
@@ -40,11 +42,6 @@ class Oauth {
         $keys_length = $secret_keys;
         $is_valid = FALSE;
         
-        // Check if is valid
-        if (!self::is_expired($timestamp)) {
-            return FALSE;    
-        }
-
         // Main validation loop
         while ($i < count($keys_length)) {
             $validation_string = sha1($id . $seed . $timestamp . $secret_keys[$i]);
@@ -55,14 +52,21 @@ class Oauth {
             $i++;
         }
         
+        // Check if is valid
+        if (!self::is_expired($timestamp)) {
+            $is_valid = FALSE;    
+        }
+        
         if ($is_valid) {
-            // Callback
-            if (!empty($callback)) {
-                call_user_func($callback);
-            } 
+            // Success callback
+            if (!empty($sCallback)) {
+                call_user_func($sCallback, $token);
+            }
         } else {
-            echo  "not valid";
-            return FALSE;
+            // Error callback
+            if (!empty($eCallback)) {
+                call_user_func($eCallback, $token);
+            } 
         }
     }
     
