@@ -27,23 +27,21 @@ class Oauth {
      * @param string $token
      * @param string $sCallback - success callback
      * @param string $eCallback - error callback
+     * @param array $secret_keys
      * @return boolean
      */
-    public static function validate_token($token, $sCallback = '', $eCallback = '') {
+    public static function validate_token($token, $sCallback = '', $eCallback = '', $secret_keys = array()) {
         
-        $contents = explode('-', $token);
-        $id = $contents[0];
-        $seed = $contents[1];
-        $timestamp = $contents[2];
-        $hash = $contents[3];
+        $secret_keys = !empty($secret_keys) ? $secret_keys : self::$secret_keys;
+        
+        list($id, $seed, $timestamp, $hash) = explode('-', $token);
         
         $i = 0;
-        $secret_keys = self::$secret_keys;
-        $keys_length = $secret_keys;
         $is_valid = FALSE;
+        $keys_length = count($secret_keys);
         
         // Main validation loop
-        while ($i < count($keys_length)) {
+        while ($i < $keys_length) {
             $validation_string = sha1($id . $seed . $timestamp . $secret_keys[$i]);
             if ($validation_string == $hash) {
                 $is_valid = TRUE;
@@ -52,7 +50,7 @@ class Oauth {
             $i++;
         }
         
-        // Check if is valid
+        // Check if is the token isn't expired
         if (!self::is_expired($timestamp)) {
             $is_valid = FALSE;    
         }
