@@ -11,7 +11,7 @@ Generate token:
   
   require_once("../somepath/oauth.php");
   
-  $id = 0;
+  $id = 0; // eg. user id
   $expirationDate = '20151215160000'; // Format YMdHis
   $token = Authentification\Oauth::generate_token($id, $expirationDate);
   ````
