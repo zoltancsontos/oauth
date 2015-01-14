@@ -23,7 +23,9 @@ Validate token:
   
   require_once("../somepath/oauth.php");
   
-  Authentification\Oauth::validate_token('sometoken', function() {
+  Authentification\Oauth::validate_token('sometoken', function($token) {
     // do something if valid
+  }, function($token) {
+    // do something if not valid
   });
   ````
