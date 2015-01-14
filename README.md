@@ -23,5 +23,5 @@ Validate token:
   
   Authentification\Oauth::validate_token('sometoken', function() {
     // do something if valid
-  })
+  });
   ````
