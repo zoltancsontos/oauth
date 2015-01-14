@@ -11,7 +11,7 @@ Generate token:
   
   require_once("../somepath/oauth.php");
   
-  $id = 0;
+  $id = 0; // eg. user id
   $expirationDate = '20151215160000'; // Format YMdHis
   $token = Authentification\Oauth::generate_token($id, $expirationDate);
   ````
@@ -23,9 +23,9 @@ Validate token:
   
   require_once("../somepath/oauth.php");
   
-  Authentification\Oauth::validate_token('sometoken', function($token) {
+  Authentification\Oauth::validate_token('sometoken', function successCallback($token) {
     // do something if valid
-  }, function($token) {
+  }, function errorCallback($token) {
     // do something if not valid
   });
   ````
