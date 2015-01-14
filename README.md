@@ -5,6 +5,15 @@ PHP oauth token validator/generator library
 
 Download the oauth.php file and place it anywhere to your project.
 
+Open the oauth.php file and change the $secret_keys property (line 17) - add up to 5 keys for higher security:
+  ````php
+  private static $secret_keys = array(
+      "&201m*am#$19aAmnes@%&W",
+      "%^a)3#@jmnAOukt2&nB@!9",
+      "nVG$%!987)Ajsh76!@#&89"
+  );
+  ````
+
 Generate token:
   ````php
   <?php
