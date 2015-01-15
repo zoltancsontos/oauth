@@ -2,7 +2,14 @@
 
 namespace Authentification;
 use \DateTime;
-
+/**
+ * ====================================================
+ * Oauth token generator / validator library
+ * @version 1.0.0
+ * @author Zoltan Csontos
+ * @license MIT
+ * ====================================================
+ */
 class Oauth {
     
     // Constants
@@ -19,8 +26,6 @@ class Oauth {
         "%^a)3#@jmnAOukt2&nB@!9",
         "nVG$%!987)Ajsh76!@#&89"
     );
-    private static $hash_table;
-    public static $token;
          
     /**
      * Validates token
@@ -51,21 +56,22 @@ class Oauth {
         }
         
         // Check if is the token isn't expired
-        if (!self::is_expired($timestamp)) {
+        if (self::is_expired($timestamp)) {
             $is_valid = FALSE;    
         }
         
         if ($is_valid) {
             // Success callback
             if (!empty($sCallback)) {
-                call_user_func($sCallback, $token);
+                return call_user_func($sCallback, $token);
             }
         } else {
             // Error callback
             if (!empty($eCallback)) {
-                call_user_func($eCallback, $token);
+                return call_user_func($eCallback, $token);
             } 
         }
+        return $is_valid;
     }
     
     /**
@@ -79,9 +85,9 @@ class Oauth {
         $expiration_date = new DateTime($datetime);
         
         if ($current_date < $expiration_date) {
-            return TRUE;   
+            return FALSE;   
         }
-        return FALSE;
+        return TRUE;
         
     }
     
